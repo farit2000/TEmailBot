@@ -25,7 +25,7 @@ def send_info(message):
     )
     message_update = telebot.types.Update.de_json(json_str)
     myobj = {'first_name': str(message_update)}
-    resp = requests.post('https://postman-echo.com/post', data=myobj)
+    resp = requests.post('https://postman-echo.com/post', data=message_update)
     bot.send_message(message.chat.id, resp.text)
     bot.send_message(message.chat.id, text, parse_mode='HTML')
 

@@ -22,8 +22,7 @@ def send_info(message):
     "<b>Welcome to the TEmailBot 💎🤖!</b>\n"
     "Say Hello to the bot to get a reply from it!"
     )
-    myobj = {'somekey': 'somevalue'}
-    resp = requests.post('https://www.w3schools.com/python/demopage.php', data=myobj)
+    resp = requests.post('https://postman-echo.com/post', data=message)
     bot.send_message(message.chat.id, resp.text)
     bot.send_message(message.chat.id, text, parse_mode='HTML')
 

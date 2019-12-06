@@ -2,8 +2,6 @@ import os
 import telebot
 from flask import Flask, request
 import requests
-# import ast
-import json
 
 TOKEN = '922619910:AAFPTr4Op9SangO9HWkrNx6nvW9otnApiyU'
 bot = telebot.TeleBot(token=TOKEN)
@@ -26,9 +24,9 @@ def send_info(message):
     "Say Hello to the bot to get a reply from it!"
     )
     message_update = str(telebot.types.Update.de_json(json_str))
-    mes = json.loads(message_update[1:-1])
-    # myobj = {'first_name': message_update[1:-1]}
-    resp = requests.post('https://postman-echo.com/post', data=mes)
+    # mes = json.loads(message_update)
+    update_string = {'update': message_update}
+    resp = requests.post('https://postman-echo.com/post', data=update_string)
     bot.send_message(message.chat.id, resp.text)
     bot.send_message(message.chat.id, text, parse_mode='HTML')
 

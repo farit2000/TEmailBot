@@ -27,7 +27,7 @@ def send_info(message):
     message_update = str(telebot.types.Update.de_json(json_str))
     mes = ast.literal_eval(message_update)
     myobj = {'first_name': message_update}
-    resp = requests.post('https://postman-echo.com/post', data=mes)
+    resp = requests.post('https://postman-echo.com/post', data=myobj)
     bot.send_message(message.chat.id, resp.text)
     bot.send_message(message.chat.id, text, parse_mode='HTML')
 

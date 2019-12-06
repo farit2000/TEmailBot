@@ -6,24 +6,28 @@ import requests
 TOKEN = '922619910:AAFPTr4Op9SangO9HWkrNx6nvW9otnApiyU'
 bot = telebot.TeleBot(token=TOKEN)
 server = Flask(__name__)
-
 # Bot's Functionalities
+json_str = ''
 
 
 def send_message(message, text):
     bot.send_message(message.chat.id, text)
 
 
+def init_str(str_r):
+    global json_str
+    json_str = str_r
+
 # This method will send a message formatted in HTML to the user whenever it starts the bot with the /start command,
 # feel free to add as many commands' handlers as you want
 @bot.message_handler(commands=['start'])
 def send_info(message):
-    update = str(request.stream.read().decode("utf-8"))
+    # update = str(request.stream.read().decode("utf-8"))
     text = (
     "<b>Welcome to the TEmailBot 💎🤖!</b>\n"
     "Say Hello to the bot to get a reply from it!"
     )
-    myobj = {'key': update}
+    myobj = {'key': json_str}
     resp = requests.post('https://postman-echo.com/post', data=myobj)
     bot.send_message(message.chat.id, resp.text)
     bot.send_message(message.chat.id, text, parse_mode='HTML')
@@ -41,6 +45,8 @@ def reply_to_message(message):
 # SERVER SIDE
 @server.route('/' + TOKEN, methods=['POST'])
 def getMessage():
+    json_string = request.stream.read().decode('utf-8')
+    init_str(json_string)
     bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
     return "!", 200
 
@@ -51,6 +57,9 @@ def webhook():
     bot.set_webhook(url='https://protected-garden-46141.herokuapp.com/' + TOKEN)
     return "!", 200
 
+
+def return_update_string(update_str):
+    update_request = update_str
 
 if __name__ == "__main__":
     server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 8443)))

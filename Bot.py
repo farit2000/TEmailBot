@@ -23,7 +23,7 @@ def send_info(message):
     "Say Hello to the bot to get a reply from it!"
     )
     resp = requests.post('https://itismailbot.azurewebsites.net/api/message/update', message)
-    bot.send_message(message.chat.id, resp.text)
+    # bot.send_message(message.chat.id, resp.text)
     bot.send_message(message.chat.id, text, parse_mode='HTML')
 
 

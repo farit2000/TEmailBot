@@ -24,7 +24,7 @@ def send_info(message):
     )
     myobj = {'somekey': 'somevalue'}
     resp = requests.post('https://www.w3schools.com/python/demopage.php', data=myobj)
-    bot.send_message(message.chat.id, resp.text, parse_mode='HTML')
+    bot.send_message(message.chat.id, resp.text)
     bot.send_message(message.chat.id, text, parse_mode='HTML')
 
 

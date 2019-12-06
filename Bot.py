@@ -14,10 +14,6 @@ def send_message(message, text):
     bot.send_message(message.chat.id, text)
 
 
-def init_str(str_r):
-    global json_str
-    json_str = str_r
-
 # This method will send a message formatted in HTML to the user whenever it starts the bot with the /start command,
 # feel free to add as many commands' handlers as you want
 @bot.message_handler(commands=['start'])
@@ -45,8 +41,8 @@ def reply_to_message(message):
 # SERVER SIDE
 @server.route('/' + TOKEN, methods=['POST'])
 def getMessage():
-    json_string = request.stream.read().decode('utf-8')
-    init_str(json_string)
+    global json_str
+    json_str = str(request.stream.read().decode('utf-8'))
     bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
     return "!", 200
 
@@ -60,6 +56,7 @@ def webhook():
 
 def return_update_string(update_str):
     update_request = update_str
+
 
 if __name__ == "__main__":
     server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 8443)))

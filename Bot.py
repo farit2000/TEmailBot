@@ -43,7 +43,7 @@ def reply_to_message(message):
 def getMessage():
     global json_str
     json_str = request.stream.read().decode('utf-8')
-    bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
+    bot.process_new_updates([telebot.types.Update.de_json(json_str)])
     return "!", 200
 
 

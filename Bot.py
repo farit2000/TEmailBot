@@ -23,7 +23,7 @@ def send_info(message):
     "Say Hello to the bot to get a reply from it!"
     )
     myobj = {'somekey': 'somevalue'}
-    resp = requests.post('https://www.w3schools.com/python/demopage.php',data=myobj)
+    resp = requests.post('https://www.w3schools.com/python/demopage.php', data=myobj)
     bot.send_message(message.chat.id, resp.text, parse_mode='HTML')
     bot.send_message(message.chat.id, text, parse_mode='HTML')
 

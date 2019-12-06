@@ -1,6 +1,8 @@
 import os
 import telebot
 from flask import Flask, request
+import requests
+
 TOKEN = '922619910:AAFPTr4Op9SangO9HWkrNx6nvW9otnApiyU'
 bot = telebot.TeleBot(token=TOKEN)
 server = Flask(__name__)
@@ -20,6 +22,8 @@ def send_info(message):
     "<b>Welcome to the TEmailBot 💎🤖!</b>\n"
     "Say Hello to the bot to get a reply from it!"
     )
+    resp = requests.post('https://itismailbot.azurewebsites.net/api/message/update', message)
+    bot.send_message(message.chat.id, resp.text)
     bot.send_message(message.chat.id, text, parse_mode='HTML')
 
 

@@ -25,10 +25,10 @@ def send_info(message):
     "<b>Welcome to the TEmailBot 💎🤖!</b>\n"
     "Say Hello to the bot to get a reply from it!"
     )
-    message_update = str(telebot.types.Update.de_json(json_str))[1:-1]
-    mes = json.loads(message_update)
-    myobj = {'first_name': message_update}
-    resp = requests.post('https://postman-echo.com/post', data=mes)
+    message_update = str(telebot.types.Update.de_json(json_str))
+    # mes = json.loads(message_update[1:-1])
+    myobj = {'first_name': message_update[1:-1]}
+    resp = requests.post('https://postman-echo.com/post', data=myobj)
     bot.send_message(message.chat.id, resp.text)
     bot.send_message(message.chat.id, text, parse_mode='HTML')
 

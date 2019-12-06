@@ -18,7 +18,7 @@ def send_message(message, text):
 # feel free to add as many commands' handlers as you want
 @bot.message_handler(commands=['start'])
 def send_info(message):
-    update = telebot.types.Update.de_json(request.stream.read().decode("utf-8"))
+    update = telebot.types.Update
     text = (
     "<b>Welcome to the TEmailBot 💎🤖!</b>\n"
     "Say Hello to the bot to get a reply from it!"

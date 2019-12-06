@@ -42,7 +42,7 @@ def getMessage():
 @server.route("/")
 def webhook():
     bot.remove_webhook()
-    bot.set_webhook(url=' https://afternoon-coast-92487.herokuapp.com/' + TOKEN)
+    bot.set_webhook(url='https://protected-garden-46141.herokuapp.com/' + TOKEN)
     return "!", 200
 
 

@@ -1,4 +1,4 @@
-#!/Users/faritsamardanov/Documents/shamardanov_python2k_11800/projects/telegramBot/venv/bin/python
+#!/Users/faritsamardanov/Documents/TEmailBot/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

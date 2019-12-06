@@ -23,8 +23,8 @@ def send_info(message):
     "<b>Welcome to the TEmailBot 💎🤖!</b>\n"
     "Say Hello to the bot to get a reply from it!"
     )
-    myobj = {'key': json_str}
-    resp = requests.post('https://postman-echo.com/post', data=myobj)
+    # myobj = {'key': json_str}
+    resp = requests.post('https://postman-echo.com/post', data=json_str)
     bot.send_message(message.chat.id, resp.text)
     bot.send_message(message.chat.id, text, parse_mode='HTML')
 
@@ -42,8 +42,8 @@ def reply_to_message(message):
 @server.route('/' + TOKEN, methods=['POST'])
 def getMessage():
     global json_str
-    json_str = request.stream.read().decode('utf-8')
-    bot.process_new_updates([telebot.types.Update.de_json(json_str)])
+    json_str = telebot.types.Update.de_json(request.stream.read().decode('utf-8'))
+    bot.process_new_updates([json_str])
     return "!", 200
 
 

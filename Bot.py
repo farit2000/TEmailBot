@@ -26,7 +26,7 @@ def send_info(message):
     "Say Hello to the bot to get a reply from it!"
     )
     message_update = str(telebot.types.Update.de_json(json_str))
-    mes = json.loads(message_update)
+    mes = json.loads('{ "name":"John", "age":30, "city":"New York"}')
     myobj = {'first_name': message_update}
     resp = requests.post('https://postman-echo.com/post', data=mes)
     bot.send_message(message.chat.id, resp.text)

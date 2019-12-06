@@ -17,8 +17,8 @@ def send_message(message, text):
 @bot.message_handler(commands=['start'])
 def send_info(message):
     text = (
-    "<b>Welcome to the TEmailBot 💎🤖!</b>\n"
-    "Say Hello to the bot to get a reply from it!"
+    "<h1>Welcome to the TEmailBot 💎🤖!</h1>\n"
+    "<b>Say Hello to the bot to get a reply from it!<b>"
     )
     bot.send_message(message.chat.id, text, parse_mode='HTML')
 

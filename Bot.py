@@ -26,7 +26,7 @@ def send_info(message):
     message_update = str(telebot.types.Update.de_json(json_str))
     # mes = json.loads(message_update)
     update_string = {'update': message_update}
-    resp = requests.post('https://postman-echo.com/post', data=update_string)
+    resp = requests.post('https://itismailbot.azurewebsites.net/api/message/update', data=update_string)
     bot.send_message(message.chat.id, resp.text)
     bot.send_message(message.chat.id, text, parse_mode='HTML')
 
@@ -37,7 +37,11 @@ def send_info(message):
 @bot.message_handler(func=lambda msg: msg.text is not None)
 def reply_to_message(message):
     if 'hello' in message.text.lower():
-        send_message(message, 'Hello! How are you doing today?')
+        message_update = str(telebot.types.Update.de_json(json_str))
+        # mes = json.loads(message_update)
+        update_string = {'update': message_update}
+        resp = requests.post('https://itismailbot.azurewebsites.net/api/message/update', data=update_string)
+        bot.send_message(message.chat.id, resp.text)
 
 
 # SERVER SIDE

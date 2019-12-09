@@ -30,7 +30,7 @@ def send_info(message):
     first_name = str(update.message.from_user.first_name)
     last_name = str(update.message.from_user.last_name)
     user_id = str(update.message.from_user.id)
-    update_string = {'update_string': username + " " + first_name + " " + last_name + " " + user_id}
+    update_string = {'up': username + " " + first_name + " " + last_name + " " + user_id}
     #
     # update_string = {'Message': mes, 'UserId': user_id, 'Username': username, 'FirstName': first_name,
     #                  'LastName': last_name}

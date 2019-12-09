@@ -36,7 +36,7 @@ def send_info(message):
                      'LastName': last_name}
     resp = requests.post('https://itismailbot.azurewebsites.net/api/message/update', json=update_string)
     data_from_server = json.loads(str(resp.text))
-    bot.send_message(message.chat.id, str(data_from_server["messages"]))
+    bot.send_message(message.chat.id, str(data_from_server["messages"][0]))
     bot.send_message(message.chat.id, text, parse_mode='HTML')
 
 

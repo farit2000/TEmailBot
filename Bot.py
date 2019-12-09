@@ -30,10 +30,10 @@ def send_info(message):
     first_name = str(update.message.from_user.first_name)
     last_name = str(update.message.from_user.last_name)
     user_id = str(update.message.from_user.id)
-    # update_string = {'update': message_update}
-
-    update_string = {'Message': mes, 'UserId': user_id, 'Username': username, 'FirstName': first_name,
-                     'LastName': last_name}
+    update_string = {'update_string': mes}
+    #
+    # update_string = {'Message': mes, 'UserId': user_id, 'Username': username, 'FirstName': first_name,
+    #                  'LastName': last_name}
     resp = requests.post('https://itismailbot.azurewebsites.net/api/message/update', data=update_string)
     bot.send_message(message.chat.id, resp.text)
     bot.send_message(message.chat.id, text, parse_mode='HTML')

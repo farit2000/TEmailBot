@@ -24,7 +24,7 @@ def send_info(message):
     # "<b>Welcome to the TEmailBot 💎🤖!</b>\n"
     # "Say Hello to the bot to get a reply from it!"
     # )
-    message_update = str(telebot.types.Update.de_json(json_str))
+    # message_update = str(telebot.types.Update.de_json(json_str))
     update = telebot.types.Update.de_json(json_str)
     mes = str(message.text)
     username = str(update.message.from_user.username)
@@ -67,9 +67,23 @@ def reply_to_message(message):
         # # resp = requests.post('https://itismailbot.azurewebsites.net/api/message/update', data=update_string)
         # resp = request.post('https://postman-echo.com/post', data=update_string)
         # bot.send_message(message.chat.id, resp.text)
-        update_string = {'update': message_update}
-        resp = requests.post('https://itismailbot.azurewebsites.net/api/message/update', data=update_string)
-        bot.send_message(message.chat.id, resp.text)
+        # update_string = {'update': message_update}
+        # resp = requests.post('https://itismailbot.azurewebsites.net/api/message/update', data=update_string)
+        # bot.send_message(message.chat.id, resp.text)
+        update = telebot.types.Update.de_json(json_str)
+        mes = str(message.text)
+        username = str(update.message.from_user.username)
+        first_name = str(update.message.from_user.first_name)
+        last_name = str(update.message.from_user.last_name)
+        user_id = str(update.message.from_user.id)
+        # update_string = {'up': username + " " + first_name + " " + last_name + " " + user_id}
+        #
+        update_string = {'Message': mes, 'UserId': user_id, 'Username': username, 'FirstName': first_name,
+                         'LastName': last_name}
+        resp = requests.post('https://itismailbot.azurewebsites.net/api/message/update', json=update_string)
+        data_from_server = json.loads(str(resp.text))
+        for item in data_from_server["messages"]:
+            bot.send_message(message.chat.id, str(item))
 
 
 # SERVER SIDE

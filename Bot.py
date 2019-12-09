@@ -15,6 +15,22 @@ def send_message(message, text):
     bot.send_message(message.chat.id, text)
 
 
+def make_request(message):
+    update = telebot.types.Update.de_json(json_str)
+    mes = str(message.text)
+    username = str(update.message.from_user.username)
+    first_name = str(update.message.from_user.first_name)
+    last_name = str(update.message.from_user.last_name)
+    user_id = str(update.message.from_user.id)
+    # update_string = {'up': username + " " + first_name + " " + last_name + " " + user_id}
+    #
+    update_string = {'Message': mes, 'UserId': user_id, 'Username': username, 'FirstName': first_name,
+                     'LastName': last_name}
+    resp = requests.post('https://itismailbot.azurewebsites.net/api/message/update', json=update_string)
+    data_from_server = json.loads(str(resp.text))
+    return data_from_server
+
+
 # This method will send a message formatted in HTML to the user whenever it starts the bot with the /start command,
 # feel free to add as many commands' handlers as you want
 @bot.message_handler(commands=['start', 'create', 'rename', 'addtime', 'remember', 'info'])
@@ -25,23 +41,23 @@ def send_info(message):
     # "Say Hello to the bot to get a reply from it!"
     # )
     # message_update = str(telebot.types.Update.de_json(json_str))
-    update = telebot.types.Update.de_json(json_str)
-    mes = str(message.text)
-    username = str(update.message.from_user.username)
-    first_name = str(update.message.from_user.first_name)
-    last_name = str(update.message.from_user.last_name)
-    user_id = str(update.message.from_user.id)
-    # update_string = {'up': username + " " + first_name + " " + last_name + " " + user_id}
-    #
-    update_string = {'Message': mes, 'UserId': user_id, 'Username': username, 'FirstName': first_name,
-                     'LastName': last_name}
-    resp = requests.post('https://itismailbot.azurewebsites.net/api/message/update', json=update_string)
-    data_from_server = json.loads(str(resp.text))
+    # update = telebot.types.Update.de_json(json_str)
+    # mes = str(message.text)
+    # username = str(update.message.from_user.username)
+    # first_name = str(update.message.from_user.first_name)
+    # last_name = str(update.message.from_user.last_name)
+    # user_id = str(update.message.from_user.id)
+    # # update_string = {'up': username + " " + first_name + " " + last_name + " " + user_id}
+    # #
+    # update_string = {'Message': mes, 'UserId': user_id, 'Username': username, 'FirstName': first_name,
+    #                  'LastName': last_name}
+    # resp = requests.post('https://itismailbot.azurewebsites.net/api/message/update', json=update_string)
+    # data_from_server = json.loads(str(resp.text))
+    # for item in data_from_server["messages"]:
+    #     bot.send_message(message.chat.id, str(item))
+    data_from_server = make_request(message)
     for item in data_from_server["messages"]:
         bot.send_message(message.chat.id, str(item))
-    # bot.send_message(message.chat.id, str(data_from_server["messages"][0]))
-    # bot.send_message(message.chat.id, resp.text)
-    # bot.send_message(message.chat.id, text, parse_mode='HTML')
 
 
 # This method will fire whenever the bot receives a message from a user,
@@ -49,18 +65,21 @@ def send_info(message):
 # it will check if there is the 'hello' word in it, if so it will reply with the message we defined
 @bot.message_handler(func=lambda msg: msg.text is not None)
 def reply_to_message(message):
-    update = telebot.types.Update.de_json(json_str)
-    mes = str(message.text)
-    username = str(update.message.from_user.username)
-    first_name = str(update.message.from_user.first_name)
-    last_name = str(update.message.from_user.last_name)
-    user_id = str(update.message.from_user.id)
-    # update_string = {'up': username + " " + first_name + " " + last_name + " " + user_id}
-    #
-    update_string = {'Message': mes, 'UserId': user_id, 'Username': username, 'FirstName': first_name,
-                     'LastName': last_name}
-    resp = requests.post('https://itismailbot.azurewebsites.net/api/message/update', json=update_string)
-    data_from_server = json.loads(str(resp.text))
+    # update = telebot.types.Update.de_json(json_str)
+    # mes = str(message.text)
+    # username = str(update.message.from_user.username)
+    # first_name = str(update.message.from_user.first_name)
+    # last_name = str(update.message.from_user.last_name)
+    # user_id = str(update.message.from_user.id)
+    # # update_string = {'up': username + " " + first_name + " " + last_name + " " + user_id}
+    # #
+    # update_string = {'Message': mes, 'UserId': user_id, 'Username': username, 'FirstName': first_name,
+    #                  'LastName': last_name}
+    # resp = requests.post('https://itismailbot.azurewebsites.net/api/message/update', json=update_string)
+    # data_from_server = json.loads(str(resp.text))
+    # for item in data_from_server["messages"]:
+    #     bot.send_message(message.chat.id, str(item))
+    data_from_server = make_request(message)
     for item in data_from_server["messages"]:
         bot.send_message(message.chat.id, str(item))
 

@@ -34,7 +34,7 @@ def send_info(message):
     #
     update_string = {'Message': mes, 'UserId': user_id, 'Username': username, 'FirstName': first_name,
                      'LastName': last_name}
-    resp = requests.post('https://postman-echo.com/post/', data=update_string)
+    resp = requests.post('https://itismailbot.azurewebsites.net/api/message/update', json=update_string)
     bot.send_message(message.chat.id, resp.text)
     bot.send_message(message.chat.id, text, parse_mode='HTML')
 

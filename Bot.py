@@ -37,9 +37,17 @@ def send_info(message):
 @bot.message_handler(func=lambda msg: msg.text is not None)
 def reply_to_message(message):
     if 'hello' in message.text.lower():
-        message_update = str(telebot.types.Update.de_json(json_str))
+        # message_update = str(telebot.types.Update.de_json(json_str))
+        message_update = telebot.types.Update.de_json(json_str)
+        mes = message.text
+        username = message_update.message.from_user.username
+        first_name = message_update.message.from_user.first_name
+        last_name = message_update.message.from_user.last_name
+        user_id = message_update.message.from_user.id
+
         # mes = json.loads(message_update)
-        update_string = {'update': message_update}
+        update_string = {'message': mes, 'user_id': user_id, 'username': username, 'first_name': first_name,
+                         'last_name': last_name}
         resp = requests.post('https://itismailbot.azurewebsites.net/api/message/update', data=update_string)
         bot.send_message(message.chat.id, resp.text)
 

@@ -40,15 +40,16 @@ def reply_to_message(message):
         # message_update = str(telebot.types.Update.de_json(json_str))
         # qwerty
         message_update = telebot.types.Update.de_json(json_str)
-        mes = message.text
-        username = message_update.message.from_user.username
-        first_name = message_update.message.from_user.first_name
-        last_name = message_update.message.from_user.last_name
-        user_id = message_update.message.from_user.id
+        mes = str(message.text)
+        username = str(message_update.message.from_user.username)
+        # first_name = message_update.message.from_user.first_name
+        # last_name = message_update.message.from_user.last_name
+        # user_id = message_update.message.from_user.id
 
         # mes = json.loads(message_update)
-        update_string = {'Message': mes, 'UserId': user_id, 'Username': username, 'FirstName': first_name,
-                         'LastName': last_name}
+        # update_string = {'Message': mes, 'UserId': user_id, 'Username': username, 'FirstName': first_name,
+        #                  'LastName': last_name}
+        update_string = {'Message': mes, 'Username': username}
         # resp = requests.post('https://itismailbot.azurewebsites.net/api/message/update', data=update_string)
         resp = request.post('https://postman-echo.com/post', data=update_string)
         bot.send_message(message.chat.id, resp.text)

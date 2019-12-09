@@ -2,7 +2,7 @@ import os
 import telebot
 from flask import Flask, request
 import requests
-
+import json
 TOKEN = '922619910:AAFPTr4Op9SangO9HWkrNx6nvW9otnApiyU'
 bot = telebot.TeleBot(token=TOKEN)
 server = Flask(__name__)
@@ -35,7 +35,8 @@ def send_info(message):
     update_string = {'Message': mes, 'UserId': user_id, 'Username': username, 'FirstName': first_name,
                      'LastName': last_name}
     resp = requests.post('https://itismailbot.azurewebsites.net/api/message/update', json=update_string)
-    bot.send_message(message.chat.id, resp.text)
+    data_from_server = json.loads(resp.json())
+    bot.send_message(message.chat.id, data_from_server['messages'])
     bot.send_message(message.chat.id, text, parse_mode='HTML')
 
 

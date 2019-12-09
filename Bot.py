@@ -23,17 +23,13 @@ def send_info(message):
     "<b>Welcome to the TEmailBot 💎🤖!</b>\n"
     "Say Hello to the bot to get a reply from it!"
     )
-    # message_update = str(telebot.types.Update.de_json(json_str))
+    message_update = str(telebot.types.Update.de_json(json_str))
+    update = telebot.types.Update.de_json(json_str)
     # mes = json.loads(message_update)
-
-    # update_string = {'update': message_update}
-    # resp = requests.post('https://itismailbot.azurewebsites.net/api/message/update', data=update_string)
-    # bot.send_message(message.chat.id, resp.text)
-    # bot.send_message(message.chat.id, text, parse_mode='HTML')
-    update_string = {'Message': "qwerty"}
-    # resp = requests.post('https://itismailbot.azurewebsites.net/api/message/update', data=update_string)
-    resp = request.post('https://postman-echo.com/post', data=update_string)
+    update_string = {'update': message_update}
+    resp = requests.post('https://itismailbot.azurewebsites.net/api/message/update', data=update_string)
     bot.send_message(message.chat.id, resp.text)
+    bot.send_message(message.chat.id, text, parse_mode='HTML')
 
 
 # This method will fire whenever the bot receives a message from a user,
@@ -42,6 +38,7 @@ def send_info(message):
 @bot.message_handler(func=lambda msg: msg.text is not None)
 def reply_to_message(message):
     if 'hello' in message.text.lower():
+        message_update = str(telebot.types.Update.de_json(json_str))
         # message_update = str(telebot.types.Update.de_json(json_str))
         # qwerty
         # message_update = telebot.types.Update.de_json(json_str)
@@ -54,9 +51,12 @@ def reply_to_message(message):
         # mes = json.loads(message_update)
         # update_string = {'Message': mes, 'UserId': user_id, 'Username': username, 'FirstName': first_name,
         #                  'LastName': last_name}
-        update_string = {'Message': "qwerty"}
-        # resp = requests.post('https://itismailbot.azurewebsites.net/api/message/update', data=update_string)
-        resp = request.post('https://postman-echo.com/post', data=update_string)
+        # update_string = {'Message': }
+        # # resp = requests.post('https://itismailbot.azurewebsites.net/api/message/update', data=update_string)
+        # resp = request.post('https://postman-echo.com/post', data=update_string)
+        # bot.send_message(message.chat.id, resp.text)
+        update_string = {'update': message_update}
+        resp = requests.post('https://itismailbot.azurewebsites.net/api/message/update', data=update_string)
         bot.send_message(message.chat.id, resp.text)
 
 

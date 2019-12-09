@@ -3,7 +3,8 @@ import telebot
 from flask import Flask, request
 import requests
 import json
-TOKEN = '922619910:AAFPTr4Op9SangO9HWkrNx6nvW9otnApiyU'
+# TOKEN = '922619910:AAFPTr4Op9SangO9HWkrNx6nvW9otnApiyU'
+TOKEN = '1064096992:AAEEvJ2RH1Rx9DYcnltlKSP-PNBYCmPd9hw'
 bot = telebot.TeleBot(token=TOKEN)
 server = Flask(__name__)
 # Bot's Functionalities
@@ -16,13 +17,13 @@ def send_message(message, text):
 
 # This method will send a message formatted in HTML to the user whenever it starts the bot with the /start command,
 # feel free to add as many commands' handlers as you want
-@bot.message_handler(commands=['start'])
+@bot.message_handler(commands=['start', 'create', 'rename', 'addtime', 'remember', 'info'])
 def send_info(message):
     # update = str(request.stream.read().decode("utf-8"))
-    text = (
-    "<b>Welcome to the TEmailBot 💎🤖!</b>\n"
-    "Say Hello to the bot to get a reply from it!"
-    )
+    # text = (
+    # "<b>Welcome to the TEmailBot 💎🤖!</b>\n"
+    # "Say Hello to the bot to get a reply from it!"
+    # )
     message_update = str(telebot.types.Update.de_json(json_str))
     update = telebot.types.Update.de_json(json_str)
     mes = str(message.text)
@@ -36,9 +37,11 @@ def send_info(message):
                      'LastName': last_name}
     resp = requests.post('https://itismailbot.azurewebsites.net/api/message/update', json=update_string)
     data_from_server = json.loads(str(resp.text))
+    for item in data_from_server["messages"]:
+        bot.send_message(message.chat.id, str(item))
     # bot.send_message(message.chat.id, str(data_from_server["messages"][0]))
-    bot.send_message(message.chat.id, resp.text)
-    bot.send_message(message.chat.id, text, parse_mode='HTML')
+    # bot.send_message(message.chat.id, resp.text)
+    # bot.send_message(message.chat.id, text, parse_mode='HTML')
 
 
 # This method will fire whenever the bot receives a message from a user,

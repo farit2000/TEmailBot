@@ -23,12 +23,17 @@ def send_info(message):
     "<b>Welcome to the TEmailBot 💎🤖!</b>\n"
     "Say Hello to the bot to get a reply from it!"
     )
-    message_update = str(telebot.types.Update.de_json(json_str))
+    # message_update = str(telebot.types.Update.de_json(json_str))
     # mes = json.loads(message_update)
-    update_string = {'update': message_update}
-    resp = requests.post('https://itismailbot.azurewebsites.net/api/message/update', data=update_string)
+
+    # update_string = {'update': message_update}
+    # resp = requests.post('https://itismailbot.azurewebsites.net/api/message/update', data=update_string)
+    # bot.send_message(message.chat.id, resp.text)
+    # bot.send_message(message.chat.id, text, parse_mode='HTML')
+    update_string = {'Message': "qwerty"}
+    # resp = requests.post('https://itismailbot.azurewebsites.net/api/message/update', data=update_string)
+    resp = request.post('https://postman-echo.com/post', data=update_string)
     bot.send_message(message.chat.id, resp.text)
-    bot.send_message(message.chat.id, text, parse_mode='HTML')
 
 
 # This method will fire whenever the bot receives a message from a user,
@@ -39,7 +44,7 @@ def reply_to_message(message):
     if 'hello' in message.text.lower():
         # message_update = str(telebot.types.Update.de_json(json_str))
         # qwerty
-        message_update = telebot.types.Update.de_json(json_str)
+        # message_update = telebot.types.Update.de_json(json_str)
         # mes = str(message.text)
         # username = str(message_update.message.from_user.username)
         # first_name = message_update.message.from_user.first_name

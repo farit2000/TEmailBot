@@ -47,9 +47,10 @@ def reply_to_message(message):
         user_id = message_update.message.from_user.id
 
         # mes = json.loads(message_update)
-        update_string = {'message': mes, 'user_id': user_id, 'username': username, 'first_name': first_name,
-                         'last_name': last_name}
-        resp = requests.post('https://itismailbot.azurewebsites.net/api/message/update', data=update_string)
+        update_string = {'Message': mes, 'UserId': user_id, 'Username': username, 'FirstName': first_name,
+                         'LastName': last_name}
+        # resp = requests.post('https://itismailbot.azurewebsites.net/api/message/update', data=update_string)
+        resp = request.post('https://postman-echo.com/post', data=update_string)
         bot.send_message(message.chat.id, resp.text)
 
 

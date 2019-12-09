@@ -49,21 +49,20 @@ def send_info(message):
 # it will check if there is the 'hello' word in it, if so it will reply with the message we defined
 @bot.message_handler(func=lambda msg: msg.text is not None)
 def reply_to_message(message):
-    if 'hello' in message.text.lower():
-        update = telebot.types.Update.de_json(json_str)
-        mes = str(message.text)
-        username = str(update.message.from_user.username)
-        first_name = str(update.message.from_user.first_name)
-        last_name = str(update.message.from_user.last_name)
-        user_id = str(update.message.from_user.id)
-        # update_string = {'up': username + " " + first_name + " " + last_name + " " + user_id}
-        #
-        update_string = {'Message': mes, 'UserId': user_id, 'Username': username, 'FirstName': first_name,
-                         'LastName': last_name}
-        resp = requests.post('https://itismailbot.azurewebsites.net/api/message/update', json=update_string)
-        data_from_server = json.loads(str(resp.text))
-        for item in data_from_server["messages"]:
-            bot.send_message(message.chat.id, str(item))
+    update = telebot.types.Update.de_json(json_str)
+    mes = str(message.text)
+    username = str(update.message.from_user.username)
+    first_name = str(update.message.from_user.first_name)
+    last_name = str(update.message.from_user.last_name)
+    user_id = str(update.message.from_user.id)
+    # update_string = {'up': username + " " + first_name + " " + last_name + " " + user_id}
+    #
+    update_string = {'Message': mes, 'UserId': user_id, 'Username': username, 'FirstName': first_name,
+                     'LastName': last_name}
+    resp = requests.post('https://itismailbot.azurewebsites.net/api/message/update', json=update_string)
+    data_from_server = json.loads(str(resp.text))
+    for item in data_from_server["messages"]:
+        bot.send_message(message.chat.id, str(item))
 
 
 # SERVER SIDE

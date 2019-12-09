@@ -25,15 +25,15 @@ def send_info(message):
     )
     message_update = str(telebot.types.Update.de_json(json_str))
     update = telebot.types.Update.de_json(json_str)
-    # mes = str(message.text)
+    mes = str(message.text)
     username = str(update.message.from_user.username)
     first_name = str(update.message.from_user.first_name)
     last_name = str(update.message.from_user.last_name)
     user_id = str(update.message.from_user.id)
-    update_string = {'up': username + " " + first_name + " " + last_name + " " + user_id}
+    # update_string = {'up': username + " " + first_name + " " + last_name + " " + user_id}
     #
-    # update_string = {'Message': mes, 'UserId': user_id, 'Username': username, 'FirstName': first_name,
-    #                  'LastName': last_name}
+    update_string = {'Message': mes, 'UserId': user_id, 'Username': username, 'FirstName': first_name,
+                     'LastName': last_name}
     resp = requests.post('https://itismailbot.azurewebsites.net/api/message/update', data=update_string)
     bot.send_message(message.chat.id, resp.text)
     bot.send_message(message.chat.id, text, parse_mode='HTML')

@@ -38,6 +38,7 @@ def send_info(message):
 def reply_to_message(message):
     if 'hello' in message.text.lower():
         # message_update = str(telebot.types.Update.de_json(json_str))
+        # qwerty
         message_update = telebot.types.Update.de_json(json_str)
         mes = message.text
         username = message_update.message.from_user.username

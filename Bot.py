@@ -1,8 +1,10 @@
 import os
 import telebot
 from flask import Flask, request
+from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 import requests
 import json
+
 TOKEN = '1064096992:AAEEvJ2RH1Rx9DYcnltlKSP-PNBYCmPd9hw'
 bot = telebot.TeleBot(token=TOKEN)
 server = Flask(__name__)
@@ -15,7 +17,7 @@ def send_message(message, text):
 
 def make_request(message):
     update = telebot.types.Update.de_json(json_str)
-    mes = str(message.text)
+    mes = str(message)
     username = str(update.message.from_user.username)
     first_name = str(update.message.from_user.first_name)
     last_name = str(update.message.from_user.last_name)
@@ -27,13 +29,32 @@ def make_request(message):
     return data_from_server
 
 
+def gen_markup(button_count, buttons):
+    markup = InlineKeyboardMarkup()
+    markup.row_width = button_count
+    for button in buttons:
+        markup.add(InlineKeyboardButton(str(button), callback_data=str(button)))
+    return markup
+
+
 # This method will send a message formatted in HTML to the user whenever it starts the bot with the /start command,
 # feel free to add as many commands' handlers as you want
 @bot.message_handler(commands=['start', 'create', 'rename', 'addtime', 'remember', 'info'])
 def send_info(message):
-    data_from_server = make_request(message)
+    data_from_server = make_request(message.text)
     for item in data_from_server["messages"]:
         bot.send_message(message.chat.id, str(item))
+    if data_from_server["buttons"]:
+        bot.send_message(message.chat.id, "Select type of time measurement",
+                         reply_markup=gen_markup(len(data_from_server),
+                                                 data_from_server["buttons"]))
+
+
+@bot.callback_query_handler(func=lambda call: True)
+def callback_query(call):
+    data_from_server = make_request(call.data)
+    for item in data_from_server["messages"]:
+        bot.send_message(call.chat.id, str(item))
 
 
 # This method will fire whenever the bot receives a message from a user,
@@ -41,9 +62,13 @@ def send_info(message):
 # it will check if there is the 'hello' word in it, if so it will reply with the message we defined
 @bot.message_handler(func=lambda msg: msg.text is not None)
 def reply_to_message(message):
-    data_from_server = make_request(message)
+    data_from_server = make_request(message.text)
     for item in data_from_server["messages"]:
         bot.send_message(message.chat.id, str(item))
+    if data_from_server["buttons"]:
+        bot.send_message(message.chat.id, "Select type of time measurement",
+                         reply_markup=gen_markup(len(data_from_server),
+                                                 data_from_server["buttons"]))
 
 
 # SERVER SIDE

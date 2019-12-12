@@ -37,7 +37,7 @@ def gen_markup(button_count, buttons):
     return markup
 
 
-def send_messages(message, data_from_server):
+def send_messages_from_server(message, data_from_server):
     for item in data_from_server["messages"]:
         bot.send_message(message.chat.id, str(item))
     if data_from_server["buttons"]:
@@ -51,7 +51,7 @@ def send_messages(message, data_from_server):
 @bot.message_handler(commands=['start', 'create', 'rename', 'addtime', 'remember', 'info'])
 def send_info(message):
     data_from_server = make_request(message.text)
-    send_message(message, data_from_server)
+    send_messages_from_server(message, data_from_server)
 
 
 @bot.callback_query_handler(func=lambda call: True)
@@ -67,7 +67,7 @@ def callback_query(call):
 @bot.message_handler(func=lambda msg: msg.text is not None)
 def reply_to_message(message):
     data_from_server = make_request(message.text)
-    send_message(message, data_from_server)
+    send_messages_from_server(message, data_from_server)
 
 
 # SERVER SIDE

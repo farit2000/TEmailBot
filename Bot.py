@@ -36,18 +36,21 @@ def gen_markup(button_count, buttons):
         markup.add(InlineKeyboardButton(str(button), callback_data=str(button)))
     return markup
 
-
-# This method will send a message formatted in HTML to the user whenever it starts the bot with the /start command,
-# feel free to add as many commands' handlers as you want
-@bot.message_handler(commands=['start', 'create', 'rename', 'addtime', 'remember', 'info'])
-def send_info(message):
-    data_from_server = make_request(message.text)
+ def send_messages(message, data_from_server):
     for item in data_from_server["messages"]:
         bot.send_message(message.chat.id, str(item))
     if data_from_server["buttons"]:
         bot.send_message(message.chat.id, "Select type of time measurement",
                          reply_markup=gen_markup(len(data_from_server),
                                                  data_from_server["buttons"]))
+
+
+# This method will send a message formatted in HTML to the user whenever it starts the bot with the /start command,
+# feel free to add as many commands' handlers as you want
+@bot.message_handler(commands=['start', 'create', 'rename', 'addtime', 'remember', 'info'])
+def send_info(message):
+    data_from_server = make_request(message.text)
+    send_message(message, data_from_server)
 
 
 @bot.callback_query_handler(func=lambda call: True)
@@ -63,12 +66,7 @@ def callback_query(call):
 @bot.message_handler(func=lambda msg: msg.text is not None)
 def reply_to_message(message):
     data_from_server = make_request(message.text)
-    for item in data_from_server["messages"]:
-        bot.send_message(message.chat.id, str(item))
-    if data_from_server["buttons"]:
-        bot.send_message(message.chat.id, "Select type of time measurement",
-                         reply_markup=gen_markup(len(data_from_server),
-                                                 data_from_server["buttons"]))
+    send_message(message, data_from_server)
 
 
 # SERVER SIDE

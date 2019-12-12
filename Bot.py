@@ -36,7 +36,8 @@ def gen_markup(button_count, buttons):
         markup.add(InlineKeyboardButton(str(button), callback_data=str(button)))
     return markup
 
- def send_messages(message, data_from_server):
+
+def send_messages(message, data_from_server):
     for item in data_from_server["messages"]:
         bot.send_message(message.chat.id, str(item))
     if data_from_server["buttons"]:

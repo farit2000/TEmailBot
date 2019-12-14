@@ -65,10 +65,20 @@ def send_info(message):
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_query(call):
+    update = telebot.types.Update.de_json(json_str)
+    mes = str(call.data)
+    username = str(call.from_user.username)
+    first_name = str(call.from_user.last_name)
+    last_name = str(call.from_user.first_name)
+    user_id = str(call.from_user.id)
     # data_from_server = make_request(str(call.data))
     # for item in data_from_server["messages"]:
     # bot.answer_callback_query(call.id, str(call.data))
     # bot.send_message(call.id, str(call.data))
+    update_string = {'Message': mes, 'UserId': user_id, 'Username': username, 'FirstName': first_name,
+                     'LastName': last_name}
+    resp = requests.post('https://itismailbot.azurewebsites.net/api/message/update', json=update_string)
+    data_from_server = json.loads(str(resp.text))
     bot.answer_callback_query(call.id, show_alert=True, text=str(call.data))
 
 # @bot.inline_handler(lambda query: query.query == 'text')

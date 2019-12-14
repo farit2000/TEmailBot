@@ -56,20 +56,21 @@ def send_info(message):
     send_messages_from_server(message, data_from_server)
 
 
-@bot.callback_query_handler(func=lambda call: True)
-def ans(call):
-    kb = types.InlineKeyboardMarkup()
-    cid = call.message.chat.id
-    mid = call.message.message_id
-    bot.send_message(cid, "Ok")
-
 # @bot.callback_query_handler(func=lambda call: True)
-# def callback_query(call):
-#     # data_from_server = make_request(str(call.data))
-#     # for item in data_from_server["messages"]:
-#     # bot.answer_callback_query(call.id, str(call.data))
-#     # bot.send_message(call.id, str(call.data))
-#     bot.answer_callback_query(call.id, show_alert=True, text=str(call.data))
+# def ans(call):
+#     kb = types.InlineKeyboardMarkup()
+#     cid = call.message.chat.id
+#     mid = call.message.message_id
+#     bot.send_message(cid, "Ok")
+
+@bot.callback_query_handler(func=lambda call: True)
+def callback_query(call):
+    # data_from_server = make_request(str(call.data))
+    # for item in data_from_server["messages"]:
+    # bot.answer_callback_query(call.id, str(call.data))
+    # bot.send_message(call.id, str(call.data))
+    bot.answer_callback_query(call.id, show_alert=True, text=str(call.data))
+
 # @bot.inline_handler(lambda query: query.query == 'text')
 # def query_text(inline_query):
 #     data_from_server = make_request(str(inline_query))

@@ -29,14 +29,14 @@ def make_request(message):
     return data_from_server
 
 
-# def gen_markup(button_count, buttons):
-#     markup = InlineKeyboardMarkup()
-#     markup.row_width = button_count
-#     for button in buttons:
-#         markup.add(InlineKeyboardButton(str(button), callback_data=str(button)))
-#     return markup
-def inline_generate(button_count, buttons):
-    but_s = []
+def gen_markup(button_count, buttons):
+    markup = InlineKeyboardMarkup()
+    markup.row_width = button_count
+    for button in buttons:
+        markup.add(InlineKeyboardButton(str(button), callback_data=str(button)))
+    return markup
+# def inline_generate(button_count, buttons):
+#     but_s = []
 
 
 def send_messages_from_server(message, data_from_server):
@@ -55,6 +55,13 @@ def send_info(message):
     data_from_server = make_request(message.text)
     send_messages_from_server(message, data_from_server)
 
+
+@bot.callback_query_handler(func=lambda call: True)
+def ans(call):
+    kb = types.InlineKeyboardMarkup()
+    cid = call.message.chat.id
+    mid = call.message.message_id
+    bot.edit_message_text(call.data, cid, mid, reply_markup=kb, parse_mode='Markdown')
 
 # @bot.callback_query_handler(func=lambda call: True)
 # def callback_query(call):

@@ -79,7 +79,7 @@ def callback_query(call):
                      'LastName': last_name}
     resp = requests.post('https://itismailbot.azurewebsites.net/api/message/update', json=update_string)
     data_from_server = json.loads(str(resp.text))
-    bot.answer_callback_query(call.id, show_alert=True, text=str(resp.text))
+    bot.answer_callback_query(call.id, show_alert=True, text=str(data_from_server["messages"]))
 
 # @bot.inline_handler(lambda query: query.query == 'text')
 # def query_text(inline_query):

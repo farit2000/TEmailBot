@@ -59,8 +59,8 @@ def callback_query(call):
     # data_from_server = make_request(str(call.data))
     # for item in data_from_server["messages"]:
     # bot.answer_callback_query(call.id, str(call.data))
-    bot.send_message(call.chat.id, str(call.data))
-
+    bot.send_message(call.id, str(call.data))
+    # bot.answer_callback_query(call.id, show_alert=True, text="Дата выбрана")
 
 # This method will fire whenever the bot receives a message from a user,
 # it will check that there is actually a not empty string in it and, in this case,

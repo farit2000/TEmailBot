@@ -79,8 +79,12 @@ def callback_query(call):
                      'LastName': last_name}
     resp = requests.post('https://itismailbot.azurewebsites.net/api/message/update', json=update_string)
     data_from_server = json.loads(str(resp.text))
-    bot.send_message(call.message.chat.id, "Ok")
-    bot.answer_callback_query(call.id, show_alert=True, text=str(data_from_server["messages"]))
+    for item in data_from_server["messages"]:
+        bot.send_message(call.message.chat.id, str(item))
+    if data_from_server["buttons"]:
+        bot.send_message(call.message.chat.id, "Select type of time measurement",
+                         reply_markup=gen_markup(len(data_from_server),
+                                                 data_from_server["buttons"]))
 
 # @bot.inline_handler(lambda query: query.query == 'text')
 # def query_text(inline_query):

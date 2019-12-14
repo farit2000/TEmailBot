@@ -40,7 +40,7 @@ def send_messages_from_server(chat_id, data_from_server):
     for item in data_from_server["messages"]:
         bot.send_message(chat_id, str(item))
     if data_from_server["buttons"]:
-        bot.send_message(chat_id, "Select type of time measurement",
+        bot.send_message(chat_id,
                          reply_markup=gen_markup(len(data_from_server),
                                                  data_from_server["buttons"]))
 
@@ -56,21 +56,6 @@ def send_info(message):
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_query(call):
-    # mes = str(call.data)
-    # username = str(call.from_user.username)
-    # first_name = str(call.from_user.first_name)
-    # last_name = str(call.from_user.last_name)
-    # user_id = str(call.from_user.id)
-    # update_string = {'Message': mes, 'UserId': user_id, 'Username': username, 'FirstName': first_name,
-    #                  'LastName': last_name}
-    # resp = requests.post('https://itismailbot.azurewebsites.net/api/message/update', json=update_string)
-    # data_from_server = json.loads(str(resp.text))
-    # for item in data_from_server["messages"]:
-    #     bot.send_message(call.message.chat.id, str(item))
-    # if data_from_server["buttons"]:
-    #     bot.send_message(call.message.chat.id, "Select type of time measurement",
-    #                      reply_markup=gen_markup(len(data_from_server),
-    #                                              data_from_server["buttons"]))
     data_from_server = make_request(str(call.data), call)
     send_messages_from_server(call.message.chat.id, data_from_server)
 

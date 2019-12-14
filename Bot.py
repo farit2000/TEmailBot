@@ -56,7 +56,7 @@ def send_info(message):
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_query(call):
-    data_from_server = make_request(call.data)
+    data_from_server = make_request(str(call.data))
     for item in data_from_server["messages"]:
         bot.send_message(call.chat.id, str(item))
 

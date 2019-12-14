@@ -15,13 +15,13 @@ def send_message(message, text):
     bot.send_message(message.chat.id, text)
 
 
-def make_request(message):
-    update = telebot.types.Update.de_json(json_str)
+def make_request(message, update_value):
+    # update = telebot.types.Update.de_json(json_str)
     mes = str(message)
-    username = str(update.message.from_user.username)
-    first_name = str(update.message.from_user.first_name)
-    last_name = str(update.message.from_user.last_name)
-    user_id = str(update.message.from_user.id)
+    username = str(update_value.message.from_user.username)
+    first_name = str(update_value.message.from_user.first_name)
+    last_name = str(update_value.message.from_user.last_name)
+    user_id = str(update_value.message.from_user.id)
     update_string = {'Message': mes, 'UserId': user_id, 'Username': username, 'FirstName': first_name,
                      'LastName': last_name}
     resp = requests.post('https://itismailbot.azurewebsites.net/api/message/update', json=update_string)
@@ -39,11 +39,11 @@ def gen_markup(button_count, buttons):
 #     but_s = []
 
 
-def send_messages_from_server(message, data_from_server):
+def send_messages_from_server(chat_id, data_from_server):
     for item in data_from_server["messages"]:
-        bot.send_message(message.chat.id, str(item))
+        bot.send_message(chat_id, str(item))
     if data_from_server["buttons"]:
-        bot.send_message(message.chat.id, "Select type of time measurement",
+        bot.send_message(chat_id, "Select type of time measurement",
                          reply_markup=gen_markup(len(data_from_server),
                                                  data_from_server["buttons"]))
 
@@ -52,8 +52,9 @@ def send_messages_from_server(message, data_from_server):
 # feel free to add as many commands' handlers as you want
 @bot.message_handler(commands=['start', 'create', 'rename', 'addtime', 'remember', 'info'])
 def send_info(message):
-    data_from_server = make_request(message.text)
-    send_messages_from_server(message, data_from_server)
+    update = telebot.types.Update.de_json(json_str)
+    data_from_server = make_request(message.text, update)
+    send_messages_from_server(message.chat.id, data_from_server)
 
 
 # @bot.callback_query_handler(func=lambda call: True)
@@ -65,26 +66,23 @@ def send_info(message):
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_query(call):
-    update = telebot.types.Update.de_json(json_str)
-    mes = str(call.data)
-    username = str(call.from_user.username)
-    first_name = str(call.from_user.first_name)
-    last_name = str(call.from_user.last_name)
-    user_id = str(call.from_user.id)
-    # data_from_server = make_request(str(call.data))
+    # mes = str(call.data)
+    # username = str(call.from_user.username)
+    # first_name = str(call.from_user.first_name)
+    # last_name = str(call.from_user.last_name)
+    # user_id = str(call.from_user.id)
+    # update_string = {'Message': mes, 'UserId': user_id, 'Username': username, 'FirstName': first_name,
+    #                  'LastName': last_name}
+    # resp = requests.post('https://itismailbot.azurewebsites.net/api/message/update', json=update_string)
+    # data_from_server = json.loads(str(resp.text))
     # for item in data_from_server["messages"]:
-    # bot.answer_callback_query(call.id, str(call.data))
-    # bot.send_message(call.id, str(call.data))
-    update_string = {'Message': mes, 'UserId': user_id, 'Username': username, 'FirstName': first_name,
-                     'LastName': last_name}
-    resp = requests.post('https://itismailbot.azurewebsites.net/api/message/update', json=update_string)
-    data_from_server = json.loads(str(resp.text))
-    for item in data_from_server["messages"]:
-        bot.send_message(call.message.chat.id, str(item))
-    if data_from_server["buttons"]:
-        bot.send_message(call.message.chat.id, "Select type of time measurement",
-                         reply_markup=gen_markup(len(data_from_server),
-                                                 data_from_server["buttons"]))
+    #     bot.send_message(call.message.chat.id, str(item))
+    # if data_from_server["buttons"]:
+    #     bot.send_message(call.message.chat.id, "Select type of time measurement",
+    #                      reply_markup=gen_markup(len(data_from_server),
+    #                                              data_from_server["buttons"]))
+    data_from_server = make_request(call.data, call)
+    send_messages_from_server(call.message.chat.id, data_from_server)
 
 # @bot.inline_handler(lambda query: query.query == 'text')
 # def query_text(inline_query):
@@ -105,8 +103,8 @@ def callback_query(call):
 # it will check if there is the 'hello' word in it, if so it will reply with the message we defined
 @bot.message_handler(func=lambda msg: msg.text is not None)
 def reply_to_message(message):
-    data_from_server = make_request(message.text)
-    send_messages_from_server(message, data_from_server)
+    data_from_server = make_request(message.text, message)
+    send_messages_from_server(message.chat.id, data_from_server)
 
 
 # SERVER SIDE

@@ -61,7 +61,7 @@ def ans(call):
     kb = types.InlineKeyboardMarkup()
     cid = call.message.chat.id
     mid = call.message.message_id
-    bot.edit_message_text("OK", cid, mid, reply_markup=kb, parse_mode='Markdown')
+    bot.send_message(cid, "Ok")
 
 # @bot.callback_query_handler(func=lambda call: True)
 # def callback_query(call):

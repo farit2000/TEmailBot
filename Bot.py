@@ -29,12 +29,14 @@ def make_request(message):
     return data_from_server
 
 
-def gen_markup(button_count, buttons):
-    markup = InlineKeyboardMarkup()
-    markup.row_width = button_count
-    for button in buttons:
-        markup.add(InlineKeyboardButton(str(button), callback_data=str(button)))
-    return markup
+# def gen_markup(button_count, buttons):
+#     markup = InlineKeyboardMarkup()
+#     markup.row_width = button_count
+#     for button in buttons:
+#         markup.add(InlineKeyboardButton(str(button), callback_data=str(button)))
+#     return markup
+def inline_generate(button_count, buttons):
+    but_s = []
 
 
 def send_messages_from_server(message, data_from_server):
@@ -54,13 +56,25 @@ def send_info(message):
     send_messages_from_server(message, data_from_server)
 
 
-@bot.callback_query_handler(func=lambda call: True)
-def callback_query(call):
-    # data_from_server = make_request(str(call.data))
-    # for item in data_from_server["messages"]:
-    # bot.answer_callback_query(call.id, str(call.data))
-    # bot.send_message(call.id, str(call.data))
-    bot.answer_callback_query(call.id, show_alert=True, text=str(call.data))
+# @bot.callback_query_handler(func=lambda call: True)
+# def callback_query(call):
+#     # data_from_server = make_request(str(call.data))
+#     # for item in data_from_server["messages"]:
+#     # bot.answer_callback_query(call.id, str(call.data))
+#     # bot.send_message(call.id, str(call.data))
+#     bot.answer_callback_query(call.id, show_alert=True, text=str(call.data))
+@bot.inline_handler(lambda query: query.query == 'text')
+def query_text(inline_query):
+    data_from_server = make_request(str(inline_query))
+    but_s = []
+    for item in data_from_server["messages"]:
+        but_s.append(types.InlineQueryResultArticle('1', str(item), types.InputTextMessageContent(str(item))))
+    try:
+        # r = types.InlineQueryResultArticle('1', 'Result1', types.InputTextMessageContent('hi'))
+        # r2 = types.InlineQueryResultArticle('2', 'Result2', types.InputTextMessageContent('hi'))
+        bot.answer_inline_query(inline_query.id, but_s)
+    except Exception as e:
+        print(e)
 
 
 # This method will fire whenever the bot receives a message from a user,

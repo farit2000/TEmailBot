@@ -40,7 +40,7 @@ def send_messages_from_server(chat_id, data_from_server):
     for item in data_from_server["messages"]:
         bot.send_message(chat_id, str(item))
     if data_from_server["buttons"]:
-        bot.send_message(chat_id,
+        bot.send_message(chat_id, "",
                          reply_markup=gen_markup(len(data_from_server),
                                                  data_from_server["buttons"]))
 

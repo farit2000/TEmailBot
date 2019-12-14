@@ -37,9 +37,8 @@ def gen_markup(button_count, buttons):
 
 
 def send_messages_from_server(chat_id, data_from_server):
-    if not(data_from_server["buttons"]):
-        for item in data_from_server["messages"]:
-            bot.send_message(chat_id, str(item))
+    for item in data_from_server["messages"]:
+        bot.send_message(chat_id, str(item))
     if data_from_server["buttons"]:
         bot.send_message(chat_id, str(data_from_server["messages"][0]),
                          reply_markup=gen_markup(len(data_from_server),

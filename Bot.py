@@ -70,18 +70,18 @@ def ans(call):
 #     # bot.answer_callback_query(call.id, str(call.data))
 #     # bot.send_message(call.id, str(call.data))
 #     bot.answer_callback_query(call.id, show_alert=True, text=str(call.data))
-@bot.inline_handler(lambda query: query.query == 'text')
-def query_text(inline_query):
-    data_from_server = make_request(str(inline_query))
-    but_s = []
-    for item in data_from_server["messages"]:
-        but_s.append(types.InlineQueryResultArticle('1', str(item), types.InputTextMessageContent(str(item))))
-    try:
-        # r = types.InlineQueryResultArticle('1', 'Result1', types.InputTextMessageContent('hi'))
-        # r2 = types.InlineQueryResultArticle('2', 'Result2', types.InputTextMessageContent('hi'))
-        bot.answer_inline_query(inline_query.id, but_s)
-    except Exception as e:
-        print(e)
+# @bot.inline_handler(lambda query: query.query == 'text')
+# def query_text(inline_query):
+#     data_from_server = make_request(str(inline_query))
+#     but_s = []
+#     for item in data_from_server["messages"]:
+#         but_s.append(types.InlineQueryResultArticle('1', str(item), types.InputTextMessageContent(str(item))))
+#     try:
+#         # r = types.InlineQueryResultArticle('1', 'Result1', types.InputTextMessageContent('hi'))
+#         # r2 = types.InlineQueryResultArticle('2', 'Result2', types.InputTextMessageContent('hi'))
+#         bot.answer_inline_query(inline_query.id, but_s)
+#     except Exception as e:
+#         print(e)
 
 
 # This method will fire whenever the bot receives a message from a user,

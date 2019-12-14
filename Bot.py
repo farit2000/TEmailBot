@@ -16,7 +16,6 @@ def send_message(message, text):
 
 
 def make_request(message, update_value):
-    # update = telebot.types.Update.de_json(json_str)
     mes = str(message)
     username = str(update_value.message.from_user.username)
     first_name = str(update_value.message.from_user.first_name)
@@ -35,8 +34,6 @@ def gen_markup(button_count, buttons):
     for button in buttons:
         markup.add(InlineKeyboardButton(str(button), callback_data=str(button)))
     return markup
-# def inline_generate(button_count, buttons):
-#     but_s = []
 
 
 def send_messages_from_server(chat_id, data_from_server):
@@ -56,13 +53,6 @@ def send_info(message):
     data_from_server = make_request(message.text, update)
     send_messages_from_server(message.chat.id, data_from_server)
 
-
-# @bot.callback_query_handler(func=lambda call: True)
-# def ans(call):
-#     kb = types.InlineKeyboardMarkup()
-#     cid = call.message.chat.id
-#     mid = call.message.message_id
-#     bot.send_message(cid, "Ok")
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_query(call):
@@ -84,26 +74,14 @@ def callback_query(call):
     data_from_server = make_request(call.data, call)
     send_messages_from_server(call.message.chat.id, data_from_server)
 
-# @bot.inline_handler(lambda query: query.query == 'text')
-# def query_text(inline_query):
-#     data_from_server = make_request(str(inline_query))
-#     but_s = []
-#     for item in data_from_server["messages"]:
-#         but_s.append(types.InlineQueryResultArticle('1', str(item), types.InputTextMessageContent(str(item))))
-#     try:
-#         # r = types.InlineQueryResultArticle('1', 'Result1', types.InputTextMessageContent('hi'))
-#         # r2 = types.InlineQueryResultArticle('2', 'Result2', types.InputTextMessageContent('hi'))
-#         bot.answer_inline_query(inline_query.id, but_s)
-#     except Exception as e:
-#         print(e)
-
 
 # This method will fire whenever the bot receives a message from a user,
 # it will check that there is actually a not empty string in it and, in this case,
 # it will check if there is the 'hello' word in it, if so it will reply with the message we defined
 @bot.message_handler(func=lambda msg: msg.text is not None)
 def reply_to_message(message):
-    data_from_server = make_request(message.text, message)
+    update = telebot.types.Update.de_json(json_str)
+    data_from_server = make_request(message.text, update)
     send_messages_from_server(message.chat.id, data_from_server)
 
 

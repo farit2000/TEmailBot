@@ -56,9 +56,9 @@ def send_info(message):
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_query(call):
-    data_from_server = make_request(str(call.data))
-    for item in data_from_server["messages"]:
-        bot.answer_callback_query(call.id, str(item))
+    # data_from_server = make_request(str(call.data))
+    # for item in data_from_server["messages"]:
+    bot.answer_callback_query(call.id, str(call.data))
 
 
 # This method will fire whenever the bot receives a message from a user,

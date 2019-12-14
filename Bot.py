@@ -67,10 +67,10 @@ def send_info(message):
 def callback_query(call):
     update = telebot.types.Update.de_json(json_str)
     mes = str(call.data)
-    username = str(update.callback_query.from_user.username)
-    first_name = str(update.callback_query.from_user.first_name)
-    last_name = str(update.callback_query.from_user.last_name)
-    user_id = str(update.callback_query.from_user.id)
+    username = str(call.from_user.username)
+    first_name = str(call.from_user.first_name)
+    last_name = str(call.from_user.last_name)
+    user_id = str(call.from_user.id)
     # data_from_server = make_request(str(call.data))
     # for item in data_from_server["messages"]:
     # bot.answer_callback_query(call.id, str(call.data))

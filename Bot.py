@@ -53,7 +53,7 @@ def send_messages_from_server(chat_id, data_from_server):
 def send_start_info(message):
     bot.send_message(message.chat.id, """
     \
-Hi there, I am TemailBot💎.
+Hi there, I am 💎<b>TemailBot<b>💎.
 Here you can create new temporary emails, as well as add lifetime for temporary emails and remove its.
 <b>Available commands:</b>
 /start - Show instructions for using Temail bot

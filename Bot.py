@@ -48,8 +48,26 @@ def send_messages_from_server(chat_id, data_from_server):
 
 # This method will send a message formatted in HTML to the user whenever it starts the bot with the /start command,
 # feel free to add as many commands' handlers as you want
-@bot.message_handler(commands=['start', 'create', 'rename', 'addtime', 'remember', 'info'])
-def send_info(message):
+
+@bot.message_handler(commands=['start'])
+def send_start_info(message):
+    bot.send_message(message.chat.id, """
+    \
+Hi there, I am TemailBot💎.
+Here you can create new temporary emails, as well as add lifetime for temporary email and remove it.
+Available commands:
+/start - Show instructions for using Temail bot
+/create - Create new temporary email address
+/remember -  Show created mailbox
+/remove - Remove created email
+/rename - Rename destination mailbox
+/addtime - Add the lifetime of the mailbox
+\
+""")
+
+
+@bot.message_handler(commands=['create', 'rename', 'addtime', 'remember', 'info'])
+def send_answers_from_server(message):
     update = telebot.types.Update.de_json(json_str)
     data_from_server = make_request(message.text, update.message)
     send_messages_from_server(message.chat.id, data_from_server)

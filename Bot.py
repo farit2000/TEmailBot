@@ -102,7 +102,7 @@ def get_message():
 @server.route("/")
 def web_hook():
     bot.remove_webhook()
-    bot.set_webhook(url='https://protected-garden-46141.herokuapp.com/' + TOKEN)
+    bot.set_webhook(url='https://temail-bot.herokuapp.com/' + TOKEN)
     return "!", 200
 
 

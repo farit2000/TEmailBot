@@ -78,6 +78,7 @@ def callback_query(call):
     data_from_server = make_request(str(call.data), call)
     send_messages_from_server(call.message.chat.id, data_from_server)
 
+
 # This method will fire whenever the bot receives a message from a user,
 # it will check that there is actually a not empty string in it and, in this case,
 # it will check if there is the 'hello' word in it, if so it will reply with the message we defined

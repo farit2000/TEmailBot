@@ -55,7 +55,7 @@ def send_start_info(message):
     \
 Hi there, I am TemailBot💎.
 Here you can create new temporary emails, as well as add lifetime for temporary email and remove it.
-<h4>Available commands:</h4>
+<b>Available commands:</b>
 /start - Show instructions for using Temail bot
 /create - Create new temporary email address
 /remember -  Show created mailbox

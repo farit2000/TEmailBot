@@ -77,7 +77,6 @@ def send_answers_from_server(message):
 def callback_query(call):
     data_from_server = make_request(str(call.data), call)
     send_messages_from_server(call.message.chat.id, data_from_server)
-    bot.a
 
 # This method will fire whenever the bot receives a message from a user,
 # it will check that there is actually a not empty string in it and, in this case,

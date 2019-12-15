@@ -66,7 +66,7 @@ Here you can create new temporary emails, as well as add lifetime for temporary 
 """, parse_mode="HTML")
 
 
-@bot.message_handler(commands=['create', 'rename', 'addtime', 'remember', 'info'])
+@bot.message_handler(commands=['create', 'rename', 'addtime', 'remember', 'info', 'cancel'])
 def send_answers_from_server(message):
     update = telebot.types.Update.de_json(json_str)
     data_from_server = make_request(message.text, update.message)
@@ -77,7 +77,7 @@ def send_answers_from_server(message):
 def callback_query(call):
     data_from_server = make_request(str(call.data), call)
     send_messages_from_server(call.message.chat.id, data_from_server)
-
+    bot.a
 
 # This method will fire whenever the bot receives a message from a user,
 # it will check that there is actually a not empty string in it and, in this case,

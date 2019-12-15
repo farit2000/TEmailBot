@@ -54,13 +54,13 @@ def send_start_info(message):
     bot.send_message(message.chat.id, """
     \
 Hi there, I am TemailBot💎.
-Here you can create new temporary emails, as well as add lifetime for temporary email and remove it.
+Here you can create new temporary emails, as well as add lifetime for temporary emails and remove its.
 <b>Available commands:</b>
 /start - Show instructions for using Temail bot
-/create - Create new temporary email address
-/remember -  Show created mailbox
+/new - Create new temporary email address
+/list -  Show created mailbox
 /remove - Remove created email
-/rename - Rename destination mailbox
+/change - Rename destination mailbox
 /addtime - Add the lifetime of the mailbox
 \
 """, parse_mode="HTML")

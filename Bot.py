@@ -66,7 +66,7 @@ Here you can create new temporary emails, as well as add lifetime for temporary 
 """, parse_mode="HTML")
 
 
-@bot.message_handler(commands=['create', 'rename', 'addtime', 'remember', 'info', 'cancel'])
+@bot.message_handler(commands=['new', 'change', 'addtime', 'list', 'cancel'])
 def send_answers_from_server(message):
     update = telebot.types.Update.de_json(json_str)
     data_from_server = make_request(message.text, update.message)

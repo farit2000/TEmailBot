@@ -57,11 +57,12 @@ Hi there, I am TemailBot💎.
 Here you can create new temporary emails, as well as add lifetime for temporary emails and remove its.
 <b>Available commands:</b>
 /start - Show instructions for using Temail bot
+/cancel - Cancel the current command
 /new - Create new temporary email address
-/list -  Show created mailbox
+/list -  Show created emails
 /remove - Remove created email
-/change - Rename destination mailbox
-/addtime - Add the lifetime of the mailbox
+/change - Rename destination email
+/addtime - Add the lifetime of the email
 \
 """, parse_mode="HTML")
 

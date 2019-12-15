@@ -23,7 +23,7 @@ def make_request(message, update_value):
     user_id = str(update_value.from_user.id)
     update_string = {'Message': mes, 'UserId': user_id, 'Username': username, 'FirstName': first_name,
                      'LastName': last_name}
-    resp = requests.post('https://itismailbot.azurewebsites.net/api/message/update', json=update_string)
+    resp = requests.post('https://temail.azurewebsites.net/api/message/update', json=update_string)
     data_from_server = json.loads(str(resp.text))
     return data_from_server
 

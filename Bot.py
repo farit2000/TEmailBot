@@ -54,7 +54,7 @@ def edit_preview_messages(call, data_from_server):
     else:
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                               text=data_from_server["messages"][0])
-        for i in range(data_from_server["messages"]):
+        for i in range(len(data_from_server["messages"])):
             if i >= 1:
                 bot.send_message(call.message.chat.id, data_from_server["messages"][i])
 

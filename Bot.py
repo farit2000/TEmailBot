@@ -88,6 +88,8 @@ def callback_query(call):
     #     return
     if data_from_server["buttons"]:
         edit_preview_messages(call, data_from_server)
+    else:
+        send_messages_from_server(call.message.chat.id, data_from_server)
 
 
 # This method will fire whenever the bot receives a message from a user,

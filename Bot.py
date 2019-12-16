@@ -83,13 +83,11 @@ def send_answers_from_server(message):
 @bot.callback_query_handler(func=lambda call: True)
 def callback_query(call):
     data_from_server = make_request(str(call.data), call)
-    if len(data_from_server["messages"]) > 1:
-        send_messages_from_server(call.message.chat.id, data_from_server)
-        return
-    try:
+    # if len(data_from_server["messages"]) > 1:
+    #     send_messages_from_server(call.message.chat.id, data_from_server)
+    #     return
+    if data_from_server["buttons"]:
         edit_preview_messages(call, data_from_server)
-    finally:
-        send_messages_from_server(call.message.chat.id, data_from_server)
 
 
 # This method will fire whenever the bot receives a message from a user,

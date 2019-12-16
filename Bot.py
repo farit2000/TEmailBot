@@ -46,9 +46,15 @@ def send_messages_from_server(chat_id, data_from_server):
                                                  data_from_server["buttons"]))
 
 
+def edit_preview_messages(call, data_from_server):
+    if data_from_server["buttons"]:
+        bot.edit_message_text(str(data_from_server["messages"][0]), call.message.chat.id, call.message_id,
+                              call.inline_message_id, reply_markup=gen_markup(len(data_from_server),
+                                                                              data_from_server["buttons"]))
+
+
 # This method will send a message formatted in HTML to the user whenever it starts the bot with the /start command,
 # feel free to add as many commands' handlers as you want
-
 @bot.message_handler(commands=['start'])
 def send_start_info(message):
     bot.send_message(message.chat.id, """
@@ -77,7 +83,11 @@ def send_answers_from_server(message):
 @bot.callback_query_handler(func=lambda call: True)
 def callback_query(call):
     data_from_server = make_request(str(call.data), call)
-    send_messages_from_server(call.message.chat.id, data_from_server)
+    try:
+        edit_preview_messages(call, data_from_server)
+    except:
+        send_messages_from_server(call.message.chat.id, data_from_server)
+
 
 
 # This method will fire whenever the bot receives a message from a user,

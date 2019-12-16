@@ -51,6 +51,12 @@ def edit_preview_messages(call, data_from_server):
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                               text=data_from_server["messages"][0],
                               reply_markup=gen_markup(len(data_from_server), data_from_server["buttons"]))
+    else:
+        bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
+                              text=data_from_server["messages"][0])
+        for i in range(data_from_server["messages"]):
+            if i >= 1:
+                bot.send_message(call.message.chat.id, data_from_server["messages"][i])
 
 
 # This method will send a message formatted in HTML to the user whenever it starts the bot with the /start command,
@@ -83,9 +89,6 @@ def send_answers_from_server(message):
 @bot.callback_query_handler(func=lambda call: True)
 def callback_query(call):
     data_from_server = make_request(str(call.data), call)
-    # if len(data_from_server["messages"]) > 1:
-    #     send_messages_from_server(call.message.chat.id, data_from_server)
-    #     return
     if data_from_server["buttons"]:
         edit_preview_messages(call, data_from_server)
     else:

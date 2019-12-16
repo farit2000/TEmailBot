@@ -49,8 +49,10 @@ def send_messages_from_server(chat_id, data_from_server):
 
 def edit_preview_messages(call, data_from_server):
     if data_from_server["buttons"]:
-        bot.edit_message_text(str(data_from_server["messages"][0]), call.message.chat.id, call.message_id,
-                              reply_markup=gen_markup(len(data_from_server), data_from_server["buttons"]))
+        bot.edit_message_reply_markup(call.message.chat.id, call.message.message_id, call.message.inline_message_id,
+                                      reply_markup=gen_markup(len(data_from_server), data_from_server["buttons"]))
+        # bot.edit_message_text(str(data_from_server["messages"][0]), call.message.chat.id, call.message.,
+        #                       reply_markup=gen_markup(len(data_from_server), data_from_server["buttons"]))
 
 
 # This method will send a message formatted in HTML to the user whenever it starts the bot with the /start command,
